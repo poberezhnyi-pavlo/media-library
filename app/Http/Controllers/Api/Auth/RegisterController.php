@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Exceptions\CreateModelException;
+use App\Exceptions\LoginException;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\User\RegisterRequest;
 use App\Services\User\RegisterService;
@@ -19,7 +20,17 @@ class RegisterController extends Controller
      *     summary="Реєстрація нового користувача",
      *     @OA\Response(
      *         response="200",
-     *         description="register user",
+     *         description="Реєастрація користувача",
+     *         @OA\JsonContent(ref="#/components/schemas/TokenResponse")
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Помилка валідацуії"
+     *     ),
+     *      @OA\Response(
+     *         response=400,
+     *         description="Помилка авторизації/реєастрації користувача",
+     *         @OA\JsonContent(ref="#/components/schemas/ExceptionResponse")
      *     ),
      *     @OA\RequestBody(
      *         required=true,
@@ -31,11 +42,12 @@ class RegisterController extends Controller
      * )
      *
      * @throws CreateModelException
+     * @throws LoginException
      */
     public function __invoke(RegisterRequest $request): JsonResponse
     {
-        $this->registerService->register($request->getDto());
+        $token = $this->registerService->register($request->getDto());
 
-        return response()->json();
+        return response()->json(['token' => $token], 200);
     }
 }

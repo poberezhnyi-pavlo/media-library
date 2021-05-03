@@ -4,39 +4,20 @@ namespace App\Services\User;
 
 use App\Dto\UserDto;
 use App\Exceptions\CreateModelException;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Exceptions\LoginException;
 
 final class RegisterService
 {
+    public function __construct(private UserService $userService, private LoginService $loginService) {}
+
     /**
      * @throws CreateModelException
+     * @throws LoginException
      */
-    public function register(UserDto $userDto): User
+    public function register(UserDto $userDto): string
     {
-        $user = new User();
-        $user->first_name = $userDto->getFirstName();
-        $user->last_name = $userDto->getLastName();
-        $user->email = $userDto->getEmail();
-        $user->birthday = $userDto->getBirthday();
-        $user->password = Hash::make($userDto->getPassword());
+        $this->userService->create($userDto);
 
-        if ($userDto->getAvatar()) {
-            $user->avatar = $this->uploadAvatar($userDto->getAvatar());
-        }
-
-        if ($user->save()) {
-
-            return $user;
-        }
-
-        throw new CreateModelException();
-    }
-
-    private function uploadAvatar(UploadedFile $uploadedFile): string
-    {
-        return Storage::disk()->putFileAs('users/avatars', $uploadedFile, $uploadedFile->getClientOriginalName());
+        return $this->loginService->login($userDto);
     }
 }

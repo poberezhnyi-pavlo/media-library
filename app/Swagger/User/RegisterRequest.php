@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Swagger;
+namespace App\Swagger\User;
 
 /**
  * @OA\Schema(

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Swagger\User;
+namespace App\Swagger;
 
 /**
  * @OA\Schema(
@@ -9,13 +9,13 @@ namespace App\Swagger\User;
  *     title="Exception",
  * )
  */
-class ExceptionResponse
+final class ExceptionResponse
 {
     /**
      * @OA\Property(
      *     property="message",
      *     type="string",
-     *     example="Ви вели невірні дані!",
+     *     example="Якась помилка",
      * )
      */
     public string $message;

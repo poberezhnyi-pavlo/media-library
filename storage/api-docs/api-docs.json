@@ -77,7 +77,27 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "register user"
+                        "description": "Реєастрація користувача",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TokenResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Помилка валідацуії"
+                    },
+                    "400": {
+                        "description": "Помилка авторизації/реєастрації користувача",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionResponse"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -85,6 +105,17 @@
     },
     "components": {
         "schemas": {
+            "ExceptionResponse": {
+                "title": "Exception",
+                "description": "Exception",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Якась помилка"
+                    }
+                },
+                "type": "object"
+            },
             "LoginRequest": {
                 "title": "Логінування користувача",
                 "description": "Request логінування користувача",
@@ -169,17 +200,6 @@
                         "description": "Аватар коритсувача",
                         "type": "string",
                         "format": "binary"
-                    }
-                },
-                "type": "object"
-            },
-            "ExceptionResponse": {
-                "title": "Exception",
-                "description": "Exception",
-                "properties": {
-                    "message": {
-                        "type": "string",
-                        "example": "Ви вели невірні дані!"
                     }
                 },
                 "type": "object"
