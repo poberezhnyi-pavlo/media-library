@@ -1,0 +1,118 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Api documentation media library",
+        "contact": {
+            "email": "email@email.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost/api",
+            "description": "Media Library"
+        }
+    ],
+    "paths": {
+        "/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Реєстрація нового користувача",
+                "operationId": "App\\Http\\Controllers\\Api\\Auth\\RegisterController::__invoke",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "register user"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "RegisterRequest": {
+                "title": "Реєастрація користувача",
+                "description": "Request ркєстрації користувача",
+                "required": [
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "password",
+                    "password_confirmation",
+                    "birthday"
+                ],
+                "properties": {
+                    "first_name": {
+                        "title": "Імя",
+                        "description": "Імя користувача",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Firstname"
+                    },
+                    "last_name": {
+                        "title": "Призвіще",
+                        "description": "Прізвище користувача",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Lastname"
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "Email user",
+                        "type": "string",
+                        "format": "email",
+                        "example": "example@email.com"
+                    },
+                    "password": {
+                        "title": "Пароль",
+                        "description": "Пароль користувача",
+                        "type": "string",
+                        "format": "password",
+                        "example": "password"
+                    },
+                    "password_confirmation": {
+                        "title": "Повтори пароль",
+                        "description": "Повтори пароль",
+                        "type": "string",
+                        "format": "password",
+                        "example": "password"
+                    },
+                    "birthday": {
+                        "title": "День народження",
+                        "description": "День народження користувача",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2020-10-20"
+                    },
+                    "avatar": {
+                        "title": "Аватар",
+                        "description": "Аватар коритсувача",
+                        "type": "string",
+                        "format": "binary"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Register and login endpoint"
+        }
+    ],
+    "security": [
+        []
+    ]
+}
