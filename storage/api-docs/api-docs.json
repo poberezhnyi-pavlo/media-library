@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Api documentation media library",
+        "title": "Api документація медіа бібліотеки",
         "contact": {
             "email": "email@email.com"
         },
@@ -14,6 +14,50 @@
         }
     ],
     "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Логін користвача",
+                "operationId": "App\\Http\\Controllers\\Api\\Auth\\LoginController::login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Користувач успішно за логілогінився на сайті",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TokenResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Помилка валідацуії"
+                    },
+                    "400": {
+                        "description": "Помилка авторизації",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExceptionResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/register": {
             "post": {
                 "tags": [
@@ -41,6 +85,31 @@
     },
     "components": {
         "schemas": {
+            "LoginRequest": {
+                "title": "Логінування користувача",
+                "description": "Request логінування користувача",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "title": "email",
+                        "description": "Email користувача",
+                        "type": "string",
+                        "format": "email",
+                        "example": "email@example"
+                    },
+                    "password": {
+                        "title": "Пароль",
+                        "description": "Пароль користувача",
+                        "type": "string",
+                        "format": "password",
+                        "example": "password"
+                    }
+                },
+                "type": "object"
+            },
             "RegisterRequest": {
                 "title": "Реєастрація користувача",
                 "description": "Request ркєстрації користувача",
@@ -103,13 +172,35 @@
                     }
                 },
                 "type": "object"
+            },
+            "ExceptionResponse": {
+                "title": "Exception",
+                "description": "Exception",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Ви вели невірні дані!"
+                    }
+                },
+                "type": "object"
+            },
+            "TokenResponse": {
+                "title": "Токен",
+                "description": "Токен",
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "example": "7|35CbQO747R2PKcAjmvW5CSurms32ZQMW1zhI6SW7"
+                    }
+                },
+                "type": "object"
             }
         }
     },
     "tags": [
         {
             "name": "Auth",
-            "description": "Register and login endpoint"
+            "description": "Регістрація і логін користувача"
         }
     ],
     "security": [

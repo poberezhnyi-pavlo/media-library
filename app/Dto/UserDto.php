@@ -66,12 +66,12 @@ final class UserDto
         $this->birthday = $birthday;
     }
 
-    public function getAvatar(): UploadedFile
+    public function getAvatar(): ?UploadedFile
     {
         return $this->avatar;
     }
 
-    public function setAvatar(UploadedFile $avatar): void
+    public function setAvatar(?UploadedFile $avatar): void
     {
         $this->avatar = $avatar;
     }

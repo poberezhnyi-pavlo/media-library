@@ -1,7 +1,7 @@
 <?php
 /**
  * @OA\Info(
- *     title="Api documentation media library",
+ *     title="Api документація медіа бібліотеки",
  *     version="1.0.0",
  *     @OA\Contact(
  *         email="email@email.com"
@@ -9,7 +9,7 @@
  * )
  * @OA\Tag(
  *     name="Auth",
- *     description="Register and login endpoint",
+ *     description="Регістрація і логін користувача",
  * )
  * @OA\Server(
  *     description="Media Library",

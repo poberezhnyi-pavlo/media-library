@@ -38,4 +38,24 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, Throwable $exception)
+    {
+        switch (true) {
+            case ($exception instanceof CustomException):
+                $responseArray = [];
+
+                if (method_exists($exception, 'getData')) {
+                    $responseArray['data'] = $exception->getData();
+                }
+
+                if ($exception->getMessage()) {
+                    $responseArray['message'] = $exception->getMessage();
+                }
+
+                return response()->json($responseArray, $exception->getCode() ?? 400);
+        }
+
+        return parent::render($request, $exception);
+    }
 }
